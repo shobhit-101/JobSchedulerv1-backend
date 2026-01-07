@@ -1,6 +1,6 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 const mongoose= require("mongoose");
 
 const Job = require("./models/Job");
@@ -9,7 +9,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("./middleware/auth");
 const app = express();
-const MONGO_URI = "mongodb+srv://bigbron:aditya700@cluster0.q3ayjcn.mongodb.net/taskmanager";
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json());// middleware to parse JSON bodies
 
@@ -222,12 +221,12 @@ app.put("/jobs/:id",auth, async (req, res) => {
 });
 
 
-mongoose.connect(MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
-
-    app.listen(3000, () => {
-      console.log("Server running on port 3000");
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch(err => {
