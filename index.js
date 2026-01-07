@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const mongoose= require("mongoose");
 
 const Job = require("./models/Job");
@@ -51,7 +52,7 @@ app.post("/auth/login", async (req, res) => {
     }
     const token = jwt.sign(
   { userId: user._id },
-  "SECRET_KEY",
+  process.env.JWT_SECRET,
   { expiresIn: "7d" }
 );
 
